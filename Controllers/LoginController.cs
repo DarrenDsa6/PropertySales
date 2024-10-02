@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PropertySales.Data;
 using PropertySales.Models;
-using PropertySales.Models.Domain;
 using PropertySales.Models.ViewModels;
+using PropertySales.Models.Domain;
 
 namespace PropertySales.Controllers
 {
@@ -16,15 +16,46 @@ namespace PropertySales.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult UserLogin()
         {
-            return View();
+            return View(new UserLoginValidation());
+        }
+
+        [HttpPost]
+        public IActionResult UserLogin(UserLoginValidation model, string userType)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userType == "Customer")
+                {
+                    var user = _context.Users
+                        .FirstOrDefault(u => u.UserName == model.UserName && u.Password == model.Password);
+
+                    if (user != null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    var user = _context.Brokers
+                        .FirstOrDefault(u => u.UserName == model.UserName && u.Password == model.Password);
+
+                    if (user != null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                ModelState.AddModelError("", "Invalid username or password.");
+            }
+
+            return View(model); // Return the view with the model to show validation messages
         }
 
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Login");
+            return View("Register");
         }
 
         [HttpPost]
@@ -44,7 +75,6 @@ namespace PropertySales.Controllers
                         Pincode = model.Pincode,
                         AdhaarCard = model.AdhaarCard
                     };
-                
                     _context.Users.Add(user);
                 }
                 else
@@ -62,7 +92,7 @@ namespace PropertySales.Controllers
                     _context.Brokers.Add(broker);
                 }
                 _context.SaveChanges();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Login");
             }
             return View(model);
         }
