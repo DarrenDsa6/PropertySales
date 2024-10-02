@@ -10,7 +10,6 @@
         body {
             background-color: #f8f9fa; /* Background color for the body */
         }
-
         .register {
             background: #ffffff; /* Background for the register container */
             padding: 3%;
@@ -32,16 +31,54 @@
             <div class="col-md-9 register-right">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="employee-tab" data-toggle="tab" href="#Customer" role="tab" aria-controls="customer" aria-selected="true">Customer</a>
+                        <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#Customer" role="tab" aria-controls="customer" aria-selected="true">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="hirer-tab" data-toggle="tab" href="#hirer" role="tab" aria-controls="hirer" aria-selected="false">Broker</a>
+                        <a class="nav-link" id="broker-tab" data-toggle="tab" href="#Broker" role="tab" aria-controls="broker" aria-selected="false">Broker</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="employee" role="tabpanel" aria-labelledby="employee-tab">
-                        <h3 class="register-heading">Apply as an Employee</h3>
-                        <form asp-action="Register" method="post">
+                    <div class="tab-pane fade show active" id="Customer" role="tabpanel" aria-labelledby="customer-tab">
+                        <h3 class="register-heading">Apply as a Customer</h3>
+                        <form id="registrationForm" asp-action="Register" method="post">
+                            <div class="row register-form">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input asp-for="Name" class="form-control" placeholder="First Name *" required />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="UserName" class="form-control" placeholder="Last Name *" required />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Password" class="form-control" placeholder="Password *" type="password" required />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="ContactNumber" class="form-control" placeholder="Your Phone *" required />
+                                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address" class="form-control" placeholder="Your Address *" required />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Pincode" class="form-control" placeholder="Pincode *" required />
+                                        <span asp-validation-for="Pincode" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="AdhaarCard" class="form-control" placeholder="Aadhaar Card *" required />
+                                        <span asp-validation-for="AdhaarCard" class="text-danger"></span>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Register" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="Broker" role="tabpanel" aria-labelledby="broker-tab">
+                        <h3 class="register-heading">Apply as a Broker</h3>
+                        <form id="registrationFormBroker" asp-action="Register" method="post">
                             <div class="row register-form">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -81,17 +118,18 @@
             </div>
         </div>
     </div>
-
     <!-- Include Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('a[data-toggle="tab"]').on('click', function (e) {
-                // Remove 'active' class from all tabs
-                $('.nav-link').removeClass('active');
-                // Add 'active' class to the clicked tab
-                $(this).addClass('active');
+            let userType = "Customer"; // Default value
+            $('a[data-toggle="tab"]').on('click', function () {
+                userType = $(this).text().trim(); // Get the user type from the clicked tab
+            });
+            $('#registrationForm, #registrationFormBroker').on('submit', function(e) {
+                const actionUrl = $(this).attr('action') + '?UserType=' + encodeURIComponent(userType);
+                $(this).attr('action', actionUrl); // Update the action URL
             });
         });
     </script>
