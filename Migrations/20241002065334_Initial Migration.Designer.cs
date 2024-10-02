@@ -12,8 +12,8 @@ using PropertySales.Data;
 namespace PropertySales.Migrations
 {
     [DbContext(typeof(PropertySalesDbContext))]
-    [Migration("20241001091851_initial migration")]
-    partial class initialmigration
+    [Migration("20241002065334_Initial Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,14 +33,18 @@ namespace PropertySales.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrokerId"));
 
-                    b.Property<long>("AadharCard")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
+                    b.Property<long>("AdhaarCard")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -52,7 +56,7 @@ namespace PropertySales.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -163,7 +167,7 @@ namespace PropertySales.Migrations
                     b.Property<long>("AdhaarCard")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("BrokerId")
+                    b.Property<int?>("BrokerId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactNumber")
@@ -262,8 +266,7 @@ namespace PropertySales.Migrations
                     b.HasOne("PropertySales.Models.Domain.Broker", "Broker")
                         .WithMany("Users")
                         .HasForeignKey("BrokerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Broker");
                 });

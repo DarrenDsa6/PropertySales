@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PropertySales.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,11 +18,12 @@ namespace PropertySales.Migrations
                     BrokerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AadharCard = table.Column<long>(type: "bigint", nullable: false)
+                    AdhaarCard = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,7 @@ namespace PropertySales.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AdhaarCard = table.Column<long>(type: "bigint", nullable: false),
-                    BrokerId = table.Column<int>(type: "int", nullable: false)
+                    BrokerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

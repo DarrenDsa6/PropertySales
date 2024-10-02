@@ -9,25 +9,28 @@ namespace PropertySales.Models.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BrokerId { get; set; }
-        
+
         [Required]
         public string Name { get; set; }
-        
+
         [Required]
-        public string Username { get;set; }  
+        public string UserName { get; set; }
 
         [Required]
         [MinLength(6)]
         public string Password { get; set; }
 
         [Required]
-        public string Number { get; set; }
-        
+        public string ContactNumber { get; set; }
+
         [Required]
-        public string Pincode  { get; set; }
-        
+        public string Address { get; set; }
+
         [Required]
-        public long AadharCard { get; set; }
+        public string Pincode { get; set; }
+
+        [Required]
+        public long AdhaarCard { get; set; }
 
         // Navigation property to Transactions
         public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>(); // Initialize

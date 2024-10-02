@@ -32,7 +32,7 @@ namespace PropertySales.Models.Domain
         public long AdhaarCard { get; set; }
 
         [ForeignKey("Broker")]
-        public int BrokerId { get; set; }
+        public int? BrokerId { get; set; }
 
 
         public virtual Broker Broker { get; set; }
